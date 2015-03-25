@@ -23,6 +23,7 @@ blockquote {padding: 0px 20px;margin: 0 0 20px;border-left: 5px solid #aaa;font-
 
 
 
+
 /*home*/
 .homeinfo{padding:250px 0 20px 0;}
 .homeinfo .player{margin-top: 70px;position: relative;}
@@ -123,3 +124,12 @@ button.close{position: absolute;right: 0;background: #FFF;width: 25px;height: 25
 	.events ul li,.events ul li .date{background: none;}
 	.events ul li .date b{display: inline;font-size: 22px;border-right: 1px solid #333;padding-right: 10px;margin-right: 10px;}
 }
+
+
+
+
+
+
+
+
+

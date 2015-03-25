@@ -1,0 +1,120 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>MVVM JavaScript Example</title>
+
+    <link href="../Content/IG/base/jquery.ui.min.css" rel="stylesheet" type="text/css" /> 
+    <link href="../Content/IG/ig/jquery.ui.custom.min.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" rel="Stylesheet" href='../Content/Metro/jquery.metro.css' /> 
+	
+	<script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../scripts/objects/model/customer.js"></script> 
+	<script type="text/javascript" src="../scripts/objects/model/dataStore.js"></script> 
+	<script type="text/javascript" src="../scripts/objects/viewModel/customersViewModel.js"></script> 
+	<script type='text/javascript' src='../scripts/IG/external/knockout-latest.debug.js'></script>
+	<script type="text/javascript" src="../scripts/IG/external/knockout.mapping-latest.debug.js"></script>
+	<script type="text/javascript" src="../scripts/IG/js/infragistics.loader.js"></script>
+	<script type="text/javascript">
+        $.ig.loader({
+			scriptPath: "../IG/js/",
+			cssPath: "../IG/css/",
+			theme: "metro",
+            resources: "igGrid.*,extensions/infragistics.datasource.knockoutjs.js,extensions/infragistics.ui.grid.knockout-extensions.js"
+        });
+    </script>
+	
+	
+
+	
+ <script type="text/javascript">
+// page fade effect 
+$(document).ready(function() {
+	$("body").css("display", "none");
+		$("body").fadeIn(2000);    
+		$("a.transition").click(function(event){
+			event.preventDefault();
+			linkLocation = this.href;
+			$("body").fadeOut(1000, redirectPage);		
+		});
+
+
+	$.ig.loader(function () {
+		// instantiate the view model and load customer objects...
+		var customerViewModel = new CustomerViewModel();
+		customerViewModel.loadCustomers();
+		ko.applyBindings(customerViewModel);
+	});
+});
+	</script>
+</head>
+<body   accent='blue' theme='dark'  >
+
+<h1 class='accent-color'>Customers</h1>
+
+        <div class='apptitle'>
+
+			<span class='accent-color'>Infragistics</span> IgniteUI Grid with knockout.js
+			&nbsp;&nbsp;
+			<span style='font-size:30pt;'>
+			   <a href="customers.html">&lsaquo;</a>
+			   <a href="customers_grid.html">&rsaquo;</a>
+			</span>
+		</div>
+
+
+   
+</br>
+</br>
+</br>
+
+	<div id="container">
+		<div id="main" role="main">
+			<div class="	 clearfix">
+                <section class="main-box">
+					<div class="sampleContainer">
+						<table id="grid1" data-bind="igGrid: {dataSource: customers, width: 700, primaryKey: 'id', autoCommit: false, 
+	                        features: [ 
+							{
+		                        name: 'Updating', editMode: 'row',
+							},
+							{
+								name: 'Filtering',
+								type: 'local',
+								filterDropDownItemIcons: false,
+								filterDropDownWidth: 200
+							}
+	                        ],
+							jQueryTemplating: false,							
+
+					virtualization: false,
+					autoGenerateColumns: false,
+
+					scrollbars: false,
+					width: '90%',							
+							rowTemplate: '<tr><td>${id}</td><td> <img width=75 height=75 src=${pictureURL}></img></td><td> ${firstName} </td> <td> ${lastName} </td><td> ${companyName} </td><td> ${emailAddress} </td> </tr>',
+                            columns: [
+								{key: 'id', headerText: 'ID', width: 50, dataType: 'string'},
+								{key: 'pictureURL', headerText: 'Pic', height:75,width:85, dataType: 'image'},
+                                {key: 'firstName', headerText: 'First Name', width: 200, dataType: 'string'},
+								{key: 'lastName', headerText: 'Last Name', width: 200, dataType: 'string'},
+								{key: 'companyName', headerText: 'Company', width: 250, dataType: 'string'},
+								{key: 'emailAddress', headerText: 'Email', width: 305, dataType: 'string'}								
+                            ]
+
+                         }"></table>
+					</div>
+				</section>
+			</div>
+		
+		<footer>
+		</footer>
+	
+</body>
+</html>

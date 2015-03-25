@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <title></title>
+      <script type="text/javascript" src="../scripts/jquery-1.6.1.min.js"></script>
+      <script type="text/javascript" src="../scripts/ko/knockout-2.1.0.debug.js"></script>
+      <script type="text/javascript" src="../scripts/objects/model/customer.js"></script> 
+      <script type="text/javascript" src="../scripts/objects/model/dataStore.js"></script> 
+      <script type="text/javascript" src="../scripts/objects/viewModel/customersViewModel.js"></script> 
+      <link type="text/css" rel="Stylesheet" href="../Content/Metro/jquery.metro.css" />
+      <link rel="stylesheet" href="styles.css" />
+      <script>
+         $(document).ready(function() {
+         
+         	// instantiate the CustomerViewModel model and apply bindings  
+            var customerViewModel = new CustomerViewModel();
+            
+            //base.DataContext = _viewModel;    
+            ko.applyBindings(customerViewModel);
+         
+         });
+         
+         
+      </script>
+
+      <script type="text/javascript">
+        var audio;
+var playlist;
+var tracks;
+var current;
+
+init();
+function init(){
+    current = 0;
+    audio = $('audio');
+    playlist = $('#playlist');
+    tracks = playlist.find('li a');
+    len = tracks.length - 1;
+    audio[0].volume = .10;
+    playlist.find('a').click(function(e){
+        e.preventDefault();
+        link = $(this);
+        current = link.parent().index();
+        run(link, audio[0]);
+    });
+    audio[0].addEventListener('ended',function(e){
+        current++;
+        if(current == len){
+            current = 0;
+            link = playlist.find('a')[0];
+        }else{
+            link = playlist.find('a')[current];    
+        }
+        run($(link),audio[0]);
+    });
+}
+function run(link, player){
+        player.src = link.attr('href');
+        par = link.parent();
+        par.addClass('active').siblings().removeClass('active');
+        audio[0].load();
+        audio[0].play();
+}
+    </script>
+   </head>
+   <body marginwidth="100x" marginheight="100x" topmargin="100px" leftmargin="10000px" rightmargin="0" bottommargin="0" accent="blue" theme="dark">
+      <h1 class="accent-color">Customers</h1>
+      <div class="apptitle">
+         <span class="accent-color">MVVM</span> Plain HTML with knockout.js
+         &nbsp;&nbsp;
+         <span style="font-size:30pt;">
+         <a href="customers.html">&lsaquo;</a>
+         <a href="customers_grid.html">&rsaquo;</a>
+         </span>
+      </div>      
+      </br>
+	  <!-- Home section -->
+      <div data-bind="visible: currentContext() == 'home' " align="center">
+         
+         <button data-bind="click: viewAll"><a>Chartbusters</a>
+         </button>
+         </br>
+         </br>
+         </br>
+         </br>
+         <h1>Top Rated Songs</h1>
+         </br>
+         </br>
+         </br>
+      </div>
+	  <!-- View All Customers section -->
+      <div data-bind="visible: currentContext() == 'all' ">
+         <button data-bind="click: reset"><a>Home</a>
+         </button>
+         </br>
+         </br>
+         </br>
+         </br>
+         </br>
+         </br>
+         </br>
+         <div id="ListMenu">
+            <!-- iterate through the customers property of the view model -->	
+            <ul data-bind="foreach: customers">
+               <div>
+                  
+                  <table>
+                     <td>
+                         <img width="100" height="100" align="middle" style="padding:5px" data-bind="attr: { src: pictureURL }" /></img>
+                     </td>
+                    
+                  </table>
+
+                  <a style="font-size:15pt;cursor:pointer;color:#067EBF" data-bind="text: fullName,click: $parent.setCurrentCustomer  "></a>	
+               </div>
+            </ul>
+         </div>
+      </div>
+	  <!-- Customer Detail section -->      
+	  <div data-bind="visible: currentContext() == 'detail' ">
+         <button data-bind="click: viewAll"><a>Go Back</a>
+         </button>
+         </br>
+         </br>
+         </br>
+         </br>
+         </br>
+         </br>
+         </br>
+
+         <table align="center">
+            <tr>
+          <td align="center">
+            <img width="200" height="200" align="middle" style="padding:5px" data-bind="attr: { src: currentCustomerPictureURL }" /></img>
+          </td>  
+         <td>
+                  <h2 data-bind="text: currentCustomerFullName "></h2>  
+                   
+
+                     </td>
+      </tr>
+      <tr>
+         <td>
+              <audio id="audio" preload="auto" tabindex="0" controls="" type="audio/mpeg">
+                        <source type="audio/mp3" src="http://www.archive.org/download/PatrikbkarlChamberSymph/PatrikbkarlChamberSymph_vbr_mp3.zip">
+                           Sorry, your browser does not support HTML5 audio.
+                         </audio>
+
+            
+         </td>
+         <td align="center">
+            <h4 data-bind="text: currentCustomerEmailAddress "></h4>
+         </td>
+        </tr>
+     </table>
+         </br>
+         
+      </div>
+   </body>
+</html>	

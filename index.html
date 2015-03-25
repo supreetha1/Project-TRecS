@@ -4,14 +4,19 @@
 <title>DJ Kranks | Official Website</title>
 <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
- 	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />  	  		
- 	<!-- boostrap -->
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />         
+  <!-- boostrap -->
 
-	<link rel="stylesheet" href="assets/animate.css">
-	<link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/animate.css">
+  <link rel="stylesheet" href="assets/style.css">
+<style type="text/css">
+.mejs-controls .mejs-stop button {
+    background: white;
+}
 
+</style>
 
-	
+  
 
 </head>
 <body>
@@ -80,22 +85,74 @@
 
 <!-- home banner starts -->
 <div id="home" class="homeinfo">
+   <div align="center">
+    <audio id="audio" preload="auto" tabindex="0" controls="" type="audio/mpeg">
+        <source type="audio/mp3" src="http://www.archive.org/download/PatrikbkarlChamberSymph/PatrikbkarlChamberSymph_vbr_mp3.zip">
+        Sorry, your browser does not support HTML5 audio.
+    </audio>
+  </div>
+
 <div class="row">
-	<div class="col-sm-6 col-xs-12">
-	<div class="fronttext">
-	 	<h2 class="bgcolor  animated fadeInUpBig"><span class="glyphicon glyphicon-headphones"></span> DJ Kranks</h2><br>
-		<p class=" animated fadeInUp">Best DJ in town. There are other and natural causes tending toward a diminution of population, but nothing contributes so greatly to this end as the fact that no male or female Martian is ever voluntarily without a weapon of destruction.</p>
-	</div>
-	</div>
+  <div class="col-sm-6 col-xs-12">
+  <div class="fronttext">
+     
+    <script type="text/javascript">
+        var audio;
+var playlist;
+var tracks;
+var current;
 
-	<div class="col-sm-5 col-xs-12 col-sm-offset-1">
-	<div class="player">
-	<img src="assets/images/dj.png" class="graphics hidden-xs  animated fadeInRightBig" alt="dj"/>
-		<iframe width="100%" height="170" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/66392700&amp;color=f2ab00&amp;theme_color=000000&amp;auto_play=true&amp;hide_related=true&amp;show_artwork=false"></iframe>
-		</div>
-	</div>
+init();
+function init(){
+    current = 0;
+    audio = $('audio');
+    playlist = $('#playlist');
+    tracks = playlist.find('li a');
+    len = tracks.length - 1;
+    audio[0].volume = .10;
+    playlist.find('a').click(function(e){
+        e.preventDefault();
+        link = $(this);
+        current = link.parent().index();
+        run(link, audio[0]);
+    });
+    audio[0].addEventListener('ended',function(e){
+        current++;
+        if(current == len){
+            current = 0;
+            link = playlist.find('a')[0];
+        }else{
+            link = playlist.find('a')[current];    
+        }
+        run($(link),audio[0]);
+    });
+}
+function run(link, player){
+        player.src = link.attr('href');
+        par = link.parent();
+        par.addClass('active').siblings().removeClass('active');
+        audio[0].load();
+        audio[0].play();
+}
+    </script>
 
-</div>	
+    <h2 class="bgcolor  animated fadeInUpBig"><span class="glyphicon glyphicon-headphones"></span> DJ Kranks</h2><br>
+    <p class=" animated fadeInUp">Best DJ in town. There are other and natural causes tending toward a diminution of population, but nothing contributes so greatly to this end as the fact that no male or female Martian is ever voluntarily without a weapon of destruction.</p>
+  </div>
+  </div>
+
+  <div class="col-sm-5 col-xs-12 col-sm-offset-1">
+    
+  <div class="player"><br><br><br><br><br><br><br><br><br>
+  <img src="assets/images/dj.png" class="graphics hidden-xs  animated fadeInRightBig" alt="dj"/>
+  
+   <!-- -->
+    <!-- -->
+    </div>
+      
+  </div>
+
+</div>  
 </div>
 <!-- home banner ends -->
 
@@ -107,7 +164,7 @@
 <!-- About Starts -->
 <div id="about" class="spacer">
 <h3><span class="glyphicon glyphicon-user"></span> About Me</h3>
-<div class="row">				
+<div class="row">       
 <div class="col-lg-4 col-sm-4  col-xs-12">
 <img src="assets/images/4.jpg" class="img-responsive" alt="about"/>
 </div>
@@ -126,12 +183,12 @@
 
 <!-- playlist Starts -->
 <div id="playlist" class="spacer">
-	<div class="row">
-					<div class="col-md-12 col-xs-12">
-					<h3><span class="glyphicon glyphicon-list"></span> Playlist</h3>
-					<iframe width="100%" height="600" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/24314082&amp;theme_color=000000&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_artwork=false"></iframe>
-					</div>
-	</div>
+  <div class="row">
+          <div class="col-md-12 col-xs-12">
+          <h3><span class="glyphicon glyphicon-list"></span> Playlist</h3>
+          <iframe></iframe>
+          </div>
+  </div>
 </div>
 <!-- #playlist Ends -->
 
@@ -143,21 +200,21 @@
 <div id="album" class="releases spacer">
 <h3><span class="glyphicon glyphicon-music"></span> Album Releases</h3>
 <div class="row">
-	<div class="col-sm-3 col-xs-12"><div class="album"><img src="assets/images/3.jpg" class="img-responsive" alt="music theme" /><div class="albumdetail"><h5>Crazy Freso</h5><a href="#" class="listen" data-toggle="modal" data-target="#albumdetail"><span class="glyphicon glyphicon-headphones"></span> Listen Song</a></div></div></div>
+  <div class="col-sm-3 col-xs-12"><div class="album"><img src="assets/images/3.jpg" class="img-responsive" alt="music theme" /><div class="albumdetail"><h5>Crazy Freso</h5><a href="#" class="listen" data-toggle="modal" data-target="#albumdetail"><span class="glyphicon glyphicon-headphones"></span> Listen Song</a></div></div></div>
 
-	<div class="col-sm-3 col-xs-12"><div class="album"><img src="assets/images/1.jpg" class="img-responsive" alt="music theme" /><div class="albumdetail"><h5>Crazy Freso</h5><a href="#" class="listen" data-toggle="modal" data-target="#albumdetail"><span class="glyphicon glyphicon-headphones"></span> Listen Song</a></div></div></div>
+  <div class="col-sm-3 col-xs-12"><div class="album"><img src="assets/images/1.jpg" class="img-responsive" alt="music theme" /><div class="albumdetail"><h5>Crazy Freso</h5><a href="#" class="listen" data-toggle="modal" data-target="#albumdetail"><span class="glyphicon glyphicon-headphones"></span> Listen Song</a></div></div></div>
 
-	<div class="col-sm-3 col-xs-12"><div class="album"><img src="assets/images/2.jpg" class="img-responsive" alt="music theme" /><div class="albumdetail"><h5>Crazy Freso</h5><a href="#" class="listen" data-toggle="modal" data-target="#albumdetail"><span class="glyphicon glyphicon-headphones"></span> Listen Song</a></div></div></div>
+  <div class="col-sm-3 col-xs-12"><div class="album"><img src="assets/images/2.jpg" class="img-responsive" alt="music theme" /><div class="albumdetail"><h5>Crazy Freso</h5><a href="#" class="listen" data-toggle="modal" data-target="#albumdetail"><span class="glyphicon glyphicon-headphones"></span> Listen Song</a></div></div></div>
 
-	<div class="col-sm-3 col-xs-12"><div class="album"><img src="assets/images/4.jpg" class="img-responsive" alt="music theme" /><div class="albumdetail"><h5>Crazy Freso</h5><a href="#" class="listen" data-toggle="modal" data-target="#albumdetail"><span class="glyphicon glyphicon-headphones"></span> Listen Song</a></div></div></div>
+  <div class="col-sm-3 col-xs-12"><div class="album"><img src="assets/images/4.jpg" class="img-responsive" alt="music theme" /><div class="albumdetail"><h5>Crazy Freso</h5><a href="#" class="listen" data-toggle="modal" data-target="#albumdetail"><span class="glyphicon glyphicon-headphones"></span> Listen Song</a></div></div></div>
 
-	<div class="col-sm-3 col-xs-12"><div class="album"><img src="assets/images/4.jpg" class="img-responsive" alt="music theme" /><div class="albumdetail"><h5>Crazy Freso</h5><a href="#" class="listen" data-toggle="modal" data-target="#albumdetail"><span class="glyphicon glyphicon-headphones"></span> Listen Song</a></div></div></div>
+  <div class="col-sm-3 col-xs-12"><div class="album"><img src="assets/images/4.jpg" class="img-responsive" alt="music theme" /><div class="albumdetail"><h5>Crazy Freso</h5><a href="#" class="listen" data-toggle="modal" data-target="#albumdetail"><span class="glyphicon glyphicon-headphones"></span> Listen Song</a></div></div></div>
 
-	<div class="col-sm-3 col-xs-12"><div class="album"><img src="assets/images/2.jpg" class="img-responsive" alt="music theme" /><div class="albumdetail"><h5>Crazy Freso</h5><a href="#" class="listen" data-toggle="modal" data-target="#albumdetail"><span class="glyphicon glyphicon-headphones"></span> Listen Song</a></div></div></div>
+  <div class="col-sm-3 col-xs-12"><div class="album"><img src="assets/images/2.jpg" class="img-responsive" alt="music theme" /><div class="albumdetail"><h5>Crazy Freso</h5><a href="#" class="listen" data-toggle="modal" data-target="#albumdetail"><span class="glyphicon glyphicon-headphones"></span> Listen Song</a></div></div></div>
 
-	<div class="col-sm-3 col-xs-12"><div class="album"><img src="assets/images/3.jpg" class="img-responsive" alt="music theme" /><div class="albumdetail"><h5>Crazy Freso</h5><a href="#" class="listen" data-toggle="modal" data-target="#albumdetail"><span class="glyphicon glyphicon-headphones"></span> Listen Song</a></div></div></div>
+  <div class="col-sm-3 col-xs-12"><div class="album"><img src="assets/images/3.jpg" class="img-responsive" alt="music theme" /><div class="albumdetail"><h5>Crazy Freso</h5><a href="#" class="listen" data-toggle="modal" data-target="#albumdetail"><span class="glyphicon glyphicon-headphones"></span> Listen Song</a></div></div></div>
 
-	<div class="col-sm-3 col-xs-12"><div class="album"><img src="assets/images/1.jpg" class="img-responsive" alt="music theme" /><div class="albumdetail"><h5>Crazy Freso</h5><a href="#" class="listen" data-toggle="modal" data-target="#albumdetail"><span class="glyphicon glyphicon-headphones"></span> Listen Song</a></div></div></div>
+  <div class="col-sm-3 col-xs-12"><div class="album"><img src="assets/images/1.jpg" class="img-responsive" alt="music theme" /><div class="albumdetail"><h5>Crazy Freso</h5><a href="#" class="listen" data-toggle="modal" data-target="#albumdetail"><span class="glyphicon glyphicon-headphones"></span> Listen Song</a></div></div></div>
 </div>
 </div>
 <!-- latest release ends-->
@@ -175,48 +232,48 @@
 <div id="blogevent"  class="blogevent spacer">
 <div class="row">
 
-	<!-- events -->
-	<div class="col-md-6 col-xs-12">
-		<div class="events">
-		<h3><span class="glyphicon glyphicon-calendar"></span> Events</h3>
-		<ul>
-			<li>
-			<div class="row">
-				<div class="col-xs-12 col-sm-3 col-lg-4"><a href="#" data-toggle="modal" data-target="#blogdetail"><img src="assets/images/1.jpg" class="img-responsive" alt="music theme" /></a></div>
-				<div class="col-xs-12  col-sm-6 col-lg-5 "><h5><a href="#" data-toggle="modal" data-target="#blogdetail">Christmas Eve Party</a></h5><p>Typewriter photo booth vinyl post-ironic, literally keffiyeh locavore tofu lomo pug Odd Future.</p></div>
-				<div class="col-xs-12  col-sm-3 col-lg-3 date"><b>2014</b><span>Dec 28</span></div>
-			</div>
-			</li>
-			<li>
-			<div class="row">
-				<div class="col-xs-12 col-sm-3 col-lg-4"><a href="#" data-toggle="modal" data-target="#blogdetail"><img src="assets/images/2.jpg" class="img-responsive" alt="music theme" /></a></div>
-				<div class="col-xs-12  col-sm-6 col-lg-5 "><h5><a href="#" data-toggle="modal" data-target="#blogdetail">Christmas Eve Party</a></h5><p>Typewriter photo booth vinyl post-ironic, literally keffiyeh locavore tofu lomo pug Odd Future.</p></div>
-				<div class="col-xs-12  col-sm-3 col-lg-3 date"><b>2014</b><span>Dec 28</span></div>
-			</div>
-			</li>
-			<li>
-			<div class="row">
-				<div class="col-xs-12 col-sm-3 col-lg-4"><a href="#" data-toggle="modal" data-target="#blogdetail"><img src="assets/images/3.jpg" class="img-responsive" alt="music theme" /></a></div>
-				<div class="col-xs-12  col-sm-6 col-lg-5 "><h5><a href="#" data-toggle="modal" data-target="#blogdetail">Christmas Eve Party</a></h5><p>Typewriter photo booth vinyl post-ironic, literally keffiyeh locavore tofu lomo pug Odd Future.</p></div>
-				<div class="col-xs-12  col-sm-3 col-lg-3 date"><b>2014</b><span>Dec 28</span></div>
-			</div>
-			</li>
-			<li>
-			<div class="row">
-				<div class="col-xs-12 col-sm-3 col-lg-4"><a href="#" data-toggle="modal" data-target="#blogdetail"><img src="assets/images/4.jpg" class="img-responsive" alt="music theme" /></a></div>
-				<div class="col-xs-12  col-sm-6 col-lg-5 "><h5><a href="#" data-toggle="modal" data-target="#blogdetail">Christmas Eve Party</a></h5><p>Typewriter photo booth vinyl post-ironic, literally keffiyeh locavore tofu lomo pug Odd Future.</p></div>
-				<div class="col-xs-12  col-sm-3 col-lg-3 date"><b>2014</b><span>Dec 28</span></div>
-			</div>
-			</li>
-		</ul>
-		</div>
-	</div>
-	<!-- events -->
+  <!-- events -->
+  <div class="col-md-6 col-xs-12">
+    <div class="events">
+    <h3><span class="glyphicon glyphicon-calendar"></span> Events</h3>
+    <ul>
+      <li>
+      <div class="row">
+        <div class="col-xs-12 col-sm-3 col-lg-4"><a href="#" data-toggle="modal" data-target="#blogdetail"><img src="assets/images/1.jpg" class="img-responsive" alt="music theme" /></a></div>
+        <div class="col-xs-12  col-sm-6 col-lg-5 "><h5><a href="#" data-toggle="modal" data-target="#blogdetail">Christmas Eve Party</a></h5><p>Typewriter photo booth vinyl post-ironic, literally keffiyeh locavore tofu lomo pug Odd Future.</p></div>
+        <div class="col-xs-12  col-sm-3 col-lg-3 date"><b>2014</b><span>Dec 28</span></div>
+      </div>
+      </li>
+      <li>
+      <div class="row">
+        <div class="col-xs-12 col-sm-3 col-lg-4"><a href="#" data-toggle="modal" data-target="#blogdetail"><img src="assets/images/2.jpg" class="img-responsive" alt="music theme" /></a></div>
+        <div class="col-xs-12  col-sm-6 col-lg-5 "><h5><a href="#" data-toggle="modal" data-target="#blogdetail">Christmas Eve Party</a></h5><p>Typewriter photo booth vinyl post-ironic, literally keffiyeh locavore tofu lomo pug Odd Future.</p></div>
+        <div class="col-xs-12  col-sm-3 col-lg-3 date"><b>2014</b><span>Dec 28</span></div>
+      </div>
+      </li>
+      <li>
+      <div class="row">
+        <div class="col-xs-12 col-sm-3 col-lg-4"><a href="#" data-toggle="modal" data-target="#blogdetail"><img src="assets/images/3.jpg" class="img-responsive" alt="music theme" /></a></div>
+        <div class="col-xs-12  col-sm-6 col-lg-5 "><h5><a href="#" data-toggle="modal" data-target="#blogdetail">Christmas Eve Party</a></h5><p>Typewriter photo booth vinyl post-ironic, literally keffiyeh locavore tofu lomo pug Odd Future.</p></div>
+        <div class="col-xs-12  col-sm-3 col-lg-3 date"><b>2014</b><span>Dec 28</span></div>
+      </div>
+      </li>
+      <li>
+      <div class="row">
+        <div class="col-xs-12 col-sm-3 col-lg-4"><a href="#" data-toggle="modal" data-target="#blogdetail"><img src="assets/images/4.jpg" class="img-responsive" alt="music theme" /></a></div>
+        <div class="col-xs-12  col-sm-6 col-lg-5 "><h5><a href="#" data-toggle="modal" data-target="#blogdetail">Christmas Eve Party</a></h5><p>Typewriter photo booth vinyl post-ironic, literally keffiyeh locavore tofu lomo pug Odd Future.</p></div>
+        <div class="col-xs-12  col-sm-3 col-lg-3 date"><b>2014</b><span>Dec 28</span></div>
+      </div>
+      </li>
+    </ul>
+    </div>
+  </div>
+  <!-- events -->
 
-	<!-- blog -->
-	<div class="col-md-5 col-md-offset-1 col-xs-12">
-		<div class="ourblog">
-		<h3><span class="glyphicon glyphicon-book"></span> Blog</h3>
+  <!-- blog -->
+  <div class="col-md-5 col-md-offset-1 col-xs-12">
+    <div class="ourblog">
+    <h3><span class="glyphicon glyphicon-book"></span> Blog</h3>
             <ul class="row">
               <li class="row"><a href="#" data-toggle="modal" data-target="#blogdetail" class="col-xs-12 col-sm-3 col-lg-4"><img src="assets/images/3.jpg" class="img-responsive" alt="music theme" /></a>
               <div class="blogtext col-xs-12 col-sm-9  col-lg-8"><h5><a href="#" data-toggle="modal" data-target="#blogdetail">New trends in music</a></h5>
@@ -245,8 +302,8 @@
             </ul>
             </div>
 
-	</div>
-	<!-- blog -->
+  </div>
+  <!-- blog -->
 
 </div>
 </div>
@@ -372,4 +429,3 @@ Copyright 2014 DJ KRANKS.
 
 </body>
 </html>
-
